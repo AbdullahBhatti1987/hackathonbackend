@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const campusSchema = new mongoose.Schema(
+const branchSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -37,6 +37,6 @@ const campusSchema = new mongoose.Schema(
   }
 );
 
-const Campus = mongoose.model("Campus", campusSchema);
+const Branch = mongoose.model("Branch", branchSchema);
 
-export default Campus;
+export default Branch;

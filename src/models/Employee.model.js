@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const employeeSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    password: {
+      type: String,
+      minlength: 8,
     },
     email: {
       type: String,
@@ -24,9 +28,9 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid email!`,
       },
     },
-    mobile: {
+    mobileNo: {
       type: String,
-      unique: true,
+      unique: false, // Change it later to true
       validate: {
         validator: function (v) {
           return /^03[0-9]{9}$/.test(v); // Validates phone numbers starting with '03' and having 11 digits
@@ -36,10 +40,10 @@ const userSchema = new mongoose.Schema(
     },
     cnic: {
       type: String,
-      unique: true,
+      unique: false,
       validate: {
         validator: function (v) {
-          return /^[0-9]{13}$/.test(v); // Validates CNIC (13 digits)
+          return /^[0-9]{13}$/.test(v);
         },
         message: (props) => `${props.value} is not a valid CNIC!`,
       },
@@ -48,42 +52,48 @@ const userSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    role: {
-      type: String,
-      required: true,
-      enum: ["admin", "user"],
-    },
     gender: {
       type: String,
       required: true,
-      enum: ["male", "female", "other"],
+      enum: ["Male", "Female"],
     },
     address: {
       type: String,
       required: true,
       trim: true,
     },
+    city: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "City",
+      required: true,
+    },
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+    },
+    branch: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Branch",
+      required: true,
+    },
+    empNo: {
+      type: String,
+    },
+    role: {
+      type: String,
+      enum: ["admin", "receptionist", "staff"],
+      default: "staff",
+    },
     imageUrl: {
-      type: String, // This can be used to store image URL or path
+      type: String,
     },
-    password: {
-  type: String,
-  required: true,
-  minlength: 8,
-  validate: {
-    validator: function (v) {
-      return v != null && v.length >= 8; // Ensures password is at least 8 characters long
-    },
-    message: (props) => "Password is required and must be at least 8 characters long!",
-  },
-},
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
-const User = mongoose.model("User", userSchema);
+const Employee = mongoose.model("User", employeeSchema);
 
-export default User;
-
+export default Employee;
