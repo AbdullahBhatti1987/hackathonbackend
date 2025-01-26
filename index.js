@@ -8,19 +8,15 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import studentRoute from "./routes/student.routes.js";
-// import authRoute from "./routes/auth.routes.js";
-import userRoute from "./routes/user.routes.js";
-import courseRoute from "./routes/course.routes.js";
-import campusRoute from "./routes/campus.routes.js";
-import sectionRoute from "./routes/section.routes.js";
-import batchRoute from "./routes/batch.routes.js";
-import cityRoute from "./routes/city.routes.js";
-import classRoute from "./routes/class.routes.js";
-import quizRoute from "./routes/quiz.routes.js";
-import assignmentRoute from "./routes/assignments.routes.js";
-import userquizRoute from "./routes/userquiz.routes.js";
 
+
+
+import cityRoute from "./routes/city.routes.js";
+import employeeRoute from "./routes/employee.routes.js";
+import cityRoute from "./routes/city.routes.js";
+import branchRoute from "./routes/branch.routes.js";
+import departmentRoute from "./routes/department.routes.js";
+import seekerRoute from './routes/seeker.route.js';
 dotenv.config();
 
 const app = express();
@@ -32,40 +28,13 @@ app.use(express.json());
 app.use(morgan("tiny"));
 console.log("MONGODB_URI", process.env.MONGO_URI);
 
-app.use("/api/v1/student", studentRoute);
-
-// Auth Routes
-// app.use("/api/v1/auth", authRoute);
-
-// Auth Routes
-app.use("/api/v1/user", userRoute);
-
-// Course Routes
-app.use("/api/v1/course", courseRoute);
-
-// Class Routes
-app.use("/api/v1/class", classRoute);
-
-// City Routes
-app.use("/api/v1/section", sectionRoute);
-
-// City Routes
+app.use("/api/v1/employee", employeeRoute);
 app.use("/api/v1/city", cityRoute);
+app.use("/api/v1/branch", branchRoute);
+app.use("/api/v1/department", departmentRoute);
+app.use("/api/v1/seeker", seekerRoute);
 
-// Campus Routes
-app.use("/api/v1/campus", campusRoute);
 
-// Batch Routes
-app.use("/api/v1/batch", batchRoute);
-
-// Quiz Routes
-app.use("/api/v1/quiz", quizRoute);
-
-// Assignment Routes
-app.use("/api/v1/assignment", assignmentRoute);
-
-// User Quiz Routes
-app.use("/api/v1/userquiz", userquizRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
