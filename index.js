@@ -11,7 +11,6 @@ import morgan from "morgan";
 
 
 
-import cityRoute from "./routes/city.routes.js";
 import employeeRoute from "./routes/employee.routes.js";
 import cityRoute from "./routes/city.routes.js";
 import branchRoute from "./routes/branch.routes.js";
