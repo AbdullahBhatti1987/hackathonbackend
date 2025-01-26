@@ -11,11 +11,11 @@ import morgan from "morgan";
 
 
 
-import employeeRoute from "./routes/employee.routes.js";
-import cityRoute from "./routes/city.routes.js";
-import branchRoute from "./routes/branch.routes.js";
-import departmentRoute from "./routes/department.routes.js";
-import seekerRoute from './routes/seeker.route.js';
+import employeeRoute from "./src/routes/employee.routes.js";
+import cityRoute from "./src/routes/city.routes.js";
+import branchRoute from "./src/routes/branch.routes.js";
+import departmentRoute from "./src/routes/department.routes.js";
+import seekerRoute from './src/routes/seeker.route.js';
 dotenv.config();
 
 const app = express();
