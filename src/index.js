@@ -9,19 +9,18 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
+import employeeRoute from "./routes/employee.routes.js";
+import cityRoute from "./routes/city.routes.js";
+import branchRoute from "./routes/branch.routes.js";
+import departmentRoute from "./routes/department.routes.js";
+import seekerRoute from './routes/seeker.route.js';
 
 
-import employeeRoute from "./src/routes/employee.routes.js";
-import cityRoute from "./src/routes/city.routes.js";
-import branchRoute from "./src/routes/branch.routes.js";
-import departmentRoute from "./src/routes/department.routes.js";
-import seekerRoute from './src/routes/seeker.route.js';
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
@@ -46,5 +45,5 @@ mongoose
   })
   .catch((error) => {
     console.error("Database connection error:", error.message);
-    process.exit(1); // Consider removing this if you want the server to attempt reconnecting
+    process.exit(1);
   });

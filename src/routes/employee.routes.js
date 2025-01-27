@@ -191,7 +191,7 @@ router.get("/all-employees", async (req, res) => {
 });
 
 // Update employee route (specific to CNIC)
-router.put("/single-emp", async (req, res) => {
+router.put("/update-password",  async (req, res) => {
   try {
     const { cnic } = req.body;  // Access CNIC from the request body
     if (!cnic) {
@@ -224,47 +224,6 @@ router.put("/single-emp", async (req, res) => {
     } else {
       sendResponse(res, 400, null, true, "Password is required to update");
     }
-  } catch (error) {
-    console.error(error.message);
-    sendResponse(res, 500, null, true, "Internal server error");
-  }
-});
-
-
-
-
-// Update employee route (specific to CNIC)
-router.put("/single-emp", authorizationAdmin, async (req, res) => {
-  try {
-    const { cnic, password } = req.body;  // Access CNIC and password from the request body
-    if (!cnic) {
-      return sendResponse(res, 400, null, true, "Correct CNIC number required");
-    }
-
-    if (!password) {
-      return sendResponse(res, 400, null, true, "Password is required");
-    }
-
-    console.log("Received CNIC: ", cnic);  // Log the received CNIC
-
-    const findEmployee = await Employee.findOne({ cnic: cnic }); // Find employee by CNIC
-
-    if (!findEmployee) {
-      return sendResponse(res, 404, null, true, "Employee not found");
-    }
-
-    // If the password is provided, hash it before updating
-    const salt = await bcrypt.genSalt(12);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Update the employee with the hashed password
-    const updatedEmployee = await Employee.findOneAndUpdate(
-      { cnic: cnic }, // Match by CNIC
-      { password: hashedPassword },  // Update only the password
-      { new: true }
-    );
-
-    sendResponse(res, 200, updatedEmployee, false, "Employee updated successfully");
   } catch (error) {
     console.error(error.message);
     sendResponse(res, 500, null, true, "Internal server error");
