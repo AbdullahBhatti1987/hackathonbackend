@@ -229,6 +229,45 @@ router.put("/update-password",  async (req, res) => {
     sendResponse(res, 500, null, true, "Internal server error");
   }
 });
+// Update employee route (specific to CNIC)
+router.put("/:id",  async (req, res) => {
+  try {
+    const { cnic } = req.body;  // Access CNIC from the request body
+    if (!cnic) {
+      return sendResponse(res, 400, null, true, "Correct CNIC number required");
+    }
+
+    console.log("Received CNIC: ", cnic);  // Log the received CNIC
+
+    // Find employee by CNIC
+    const findEmployee = await Employee.findOne({ cnic: cnic }); 
+
+    if (!findEmployee) {
+      return sendResponse(res, 404, null, true, "Employee not found");
+    }
+
+    // Hash the password if provided
+    const { password } = req.body;
+    if (password) {
+      const salt = await bcrypt.genSalt(12);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      // Update only the password field in the employee record
+      const updatedEmployee = await Employee.findOneAndUpdate(
+        { cnic: cnic },  // Match by CNIC
+        { password: hashedPassword },  // Update only the password
+        { new: true }  // Return the updated document
+      );
+
+      sendResponse(res, 200, updatedEmployee, false, "Employee password updated successfully");
+    } else {
+      sendResponse(res, 400, null, true, "Password is required to update");
+    }
+  } catch (error) {
+    console.error(error.message);
+    sendResponse(res, 500, null, true, "Internal server error");
+  }
+});
 
 
 // Delete single employee route

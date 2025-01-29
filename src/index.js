@@ -29,7 +29,7 @@ console.log("MONGODB_URI", process.env.MONGO_URI);
 app.use("/api/v1/employee", employeeRoute);
 app.use("/api/v1/city", cityRoute);
 app.use("/api/v1/branch", branchRoute);
-app.use("/api/v1/department", departmentRoute);
+app.use("/api/v1/department", departmentRoute); 
 app.use("/api/v1/seeker", seekerRoute);
 
 
